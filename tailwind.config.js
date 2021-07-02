@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
 	future: {
 		removeDeprecatedGapUtilities: true,
@@ -16,6 +18,30 @@ module.exports = {
 		},
 	},
 	theme: {
+		colors: {
+			transparent: 'transparent',
+			current: 'currentColor',
+
+			page: {
+				DEFAULT: 'var(--material-page)',
+				raised: 'var(--material-raised)',
+			},
+
+			ink: 'var(--text-primary)',
+			muted: 'var(--text-muted)',
+
+			black: colors.black,
+			white: colors.white,
+			gray: colors.warmGray,
+			red: colors.red,
+			yellow: colors.amber,
+			orange: colors.orange,
+			green: colors.green,
+			blue: colors.blue,
+			indigo: colors.indigo,
+			purple: colors.violet,
+			pink: colors.pink,
+		},
 		extend: {
 			screens: {
 				'content-xs': '20rem',
