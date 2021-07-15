@@ -42,9 +42,9 @@ export async function getServerSideProps(
 			},
 		}
 	} catch (e) {
-		// console.error(e)
-		context.res.statusCode = 404
-		context.res.end()
+		return {
+			notFound: true,
+		}
 	}
 }
 
