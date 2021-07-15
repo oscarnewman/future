@@ -29,12 +29,16 @@ function Home(props: Props) {
 						value="givingtr.ee/climate/V1StGXR8"
 					/>
 					<button
-						onClick={() =>
-							navigator.share?.({
-								url: 'https://givingtr.ee/climate/V1StGXR8',
-								title: 'Give to Climate Change',
-							})
-						}
+						onClick={async () => {
+							try {
+								await navigator.share?.({
+									url: 'https://givingtr.ee/climate/V1StGXR8',
+									title: 'Give to Climate Change',
+								})
+							} catch (e) {
+								console.log(e)
+							}
+						}}
 						className={cx(
 							'bg-green-300 font-bold text-black font-mono p-3 border-black border-2 border-b-4 rounded-none',
 							'active:bg-green-400 translate-y-0  active:-pt-2'
