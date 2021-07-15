@@ -18,8 +18,6 @@ function PagePage(props: Props) {
 export async function getServerSideProps(
 	context: GetServerSidePropsContext<{ slug: string }>
 ): Promise<GetServerSidePropsResult<{}>> {
-	// const result = await trunk.get<{ id: string }>('/pages/ephemeralId')
-
 	const cookies = nookies.get(context)
 
 	try {
