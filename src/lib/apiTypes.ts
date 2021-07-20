@@ -6,12 +6,15 @@ export type Page = {
 	path_id: string
 	path: string
 }
+export type Campaign = {
+	name: string
+	slug: string
+	callout: string
+	description: string
+}
 
 export type GetPageResponse = Page & {
-	campaign: {
-		name: string
-		slug: string
-	}
+	campaign: Campaign
 	anonymous_user: {
 		user_hash: string
 	}

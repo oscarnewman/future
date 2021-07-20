@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400;1,500;1,700;1,800&display=swap');
+
 @tailwind base;
 
 @tailwind components;
@@ -5,23 +7,24 @@
 @tailwind utilities;
 
 html {
-	@apply bg-page text-ink;
+	@apply text-ink;
+	@apply bg-gradient-to-b from-brown-100 to-white bg-no-repeat h-full;
 }
 
 :root {
 	--text-primary: theme('colors.gray.900');
 	--text-muted: theme('colors.gray.500');
 
-	--material-page: theme('colors.orange.50');
+	--material-page: theme('colors.brown.50');
 	--material-raised: theme('colors.orange.100');
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
 	:root {
 		--text-primary: theme('colors.white');
 		--text-muted: theme('colors.gray.200');
 
 		--material-page: theme('colors.gray.900');
 		--material-raised: theme('colors.gray.800');
-	}
-}
+	} */
+/* } */

@@ -1,5 +1,4 @@
 import { cx } from '@/utilities/classes'
-import { IoShareSharp } from 'react-icons/io5'
 
 type Props = {}
 
@@ -40,9 +39,13 @@ function Home(props: Props) {
 							}
 						}}
 						className={cx(
-							'bg-green-300 font-bold text-black font-mono p-3 border-black border-2 border-b-4 rounded-none',
-							'active:bg-green-400 translate-y-0  active:-pt-2'
+							'rounded-lg font-bold gap-4 flex bg-gradient-to-b from-white to-toast-200 shadow-button',
+							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4'
 						)}
+						// className={cx(
+						// 	'bg-green-300 font-bold text-black font-mono p-3 border-black border-2 border-b-4 rounded-none',
+						// 	'active:bg-green-400 translate-y-0  active:-pt-2'
+						// )}
 					>
 						Share
 					</button>

@@ -1,6 +1,6 @@
 module.exports = {
 	images: {
-		domains: [''],
+		domains: ['images.unsplash.com'],
 		path: '/_next/image',
 		loader: 'default',
 	},
