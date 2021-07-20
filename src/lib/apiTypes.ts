@@ -2,9 +2,12 @@
 
 export type ApiResponse<T> = T
 
-export type GetPageResponse = {
+export type Page = {
 	path_id: string
 	path: string
+}
+
+export type GetPageResponse = Page & {
 	campaign: {
 		name: string
 		slug: string
@@ -12,4 +15,5 @@ export type GetPageResponse = {
 	anonymous_user: {
 		user_hash: string
 	}
+	children: Page[]
 }

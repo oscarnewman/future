@@ -1,23 +1,73 @@
 import { trunk } from '@/lib/api'
 import { ApiResponse, GetPageResponse } from '@/lib/apiTypes'
+import { cx } from '@/utilities/classes'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { useRouter } from 'next/router'
 import nookies from 'nookies'
 
-type Props = {}
+type Props = {
+	pageData: GetPageResponse
+}
 
-function PagePage(props: Props) {
-	const router = useRouter()
+function PagePage({ pageData }: Props) {
+	if (!pageData) {
+		return <div>Not found</div>
+	}
 	return (
-		<div>
-			<pre>{JSON.stringify(router.query)}</pre>
+		<div className="max-w-screen-md mx-auto px-6 py-12 space-y-6">
+			<h1 className="text-xl">
+				🎁🌳/ <strong>{pageData.campaign.name}</strong>
+			</h1>
+			<p className="text-muted">This is your giving, summarized</p>
+
+			<div className="bg-page-raised p-4 space-y-3">
+				<h2 className="font-bold text-lg">Share your Tree</h2>
+				<p className="">
+					Share this link to get credit for everyone who gives from your link{' '}
+					<strong>
+						and everyone who gives to a link someone you opened your link
+						shared.
+					</strong>
+				</p>
+
+				<div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+					<input
+						type="text"
+						className="w-full p-3 font-mono border-black border disabled:text-black disabled:border-black  shadow-offset-black"
+						disabled
+						value={`givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`}
+					/>
+					<button
+						onClick={async () => {
+							try {
+								// await navigator.share?.({
+								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
+								// 	title: 'Give to' + pageData.campaign.name,
+								// })
+							} catch (e) {}
+						}}
+						className={cx(
+							'bg-green-300 font-bold text-black font-mono p-3 border-black border rounded-none shadow-offset-black',
+							'active:bg-green-400 active:shadow-none active:translate-y-[2px] active:translate-x-[2px]'
+						)}
+					>
+						Share
+					</button>
+				</div>
+			</div>
+
+			{pageData.children.map(child => (
+				<div key={child.path_id}>
+					<code>{child.path_id}</code>
+				</div>
+			))}
 		</div>
 	)
 }
 
 export async function getServerSideProps(
 	context: GetServerSidePropsContext<{ slug: string; key: string }>
-): Promise<GetServerSidePropsResult<{}>> {
+): Promise<GetServerSidePropsResult<{ pageData: GetPageResponse }>> {
 	const cookies = nookies.get(context)
 
 	try {
@@ -46,14 +96,11 @@ export async function getServerSideProps(
 		}
 
 		return {
-			props: {},
+			props: { pageData: result.data },
 		}
 	} catch (e) {
-		console.error(e)
-		context.res.statusCode = 404
-		context.res.end()
 		return {
-			props: {},
+			notFound: true,
 		}
 	}
 }

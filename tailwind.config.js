@@ -36,13 +36,16 @@ module.exports = {
 			red: colors.red,
 			yellow: colors.amber,
 			orange: colors.orange,
-			green: colors.green,
+			green: colors.lime,
 			blue: colors.blue,
 			indigo: colors.indigo,
 			purple: colors.violet,
 			pink: colors.pink,
 		},
 		extend: {
+			boxShadow: {
+				'offset-black': '2px 2px black',
+			},
 			screens: {
 				'content-xs': '20rem',
 				'content-sm': '24rem',

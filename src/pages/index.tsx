@@ -7,7 +7,7 @@ function Home(props: Props) {
 	return (
 		<div className="max-w-screen-md mx-auto px-6 py-12 space-y-6">
 			<h1 className="text-xl">
-				👏🌳/ <strong>Climate Change</strong>
+				🎁🌳/ <strong>Climate Change</strong>
 			</h1>
 			<p className="text-muted">This is your giving, summarized</p>
 
