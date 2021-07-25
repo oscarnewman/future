@@ -13,7 +13,7 @@ html {
 
 :root {
 	--text-primary: theme('colors.gray.900');
-	--text-muted: theme('colors.gray.500');
+	--text-muted: theme('colors.brown.600');
 
 	--material-page: theme('colors.brown.50');
 	--material-raised: theme('colors.orange.100');

@@ -31,7 +31,7 @@ export async function getServerSideProps(
 		)
 		console.log(result.data)
 
-		nookies.set(context, 'user_hash', result.data.anonymous_user.user_hash, {
+		nookies.set(context, 'user_hash', result.data.user.hash, {
 			maxAge: 60 * 60 * 24 * 365 * 10,
 		})
 

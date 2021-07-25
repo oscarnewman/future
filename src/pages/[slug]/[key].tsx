@@ -1,17 +1,18 @@
+import DonationBox from '@/components/DonationBox'
+import ShareLinkBox from '@/components/ShareLinkBox'
+import Timeline from '@/components/Timeline'
+import Stack from '@/components/ui/Stack'
 import { trunk } from '@/lib/api'
 import { ApiResponse, GetPageResponse } from '@/lib/apiTypes'
 import { cx } from '@/utilities/classes'
+import { formatMinorAmmount } from '@/utilities/currency'
+import { generatePageLink } from '@/utilities/links'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import Head from 'next/head'
-import nookies from 'nookies'
-import {
-	HiChevronRight,
-	HiMenuAlt3,
-	HiBadgeCheck,
-	HiOutlineCash,
-	HiOutlineUserGroup,
-} from 'react-icons/hi'
 import Image from 'next/image'
+import nookies from 'nookies'
+import React from 'react'
+import { HiBadgeCheck, HiChevronRight, HiMenuAlt3 } from 'react-icons/hi'
 
 type Props = {
 	pageData: GetPageResponse
@@ -21,10 +22,13 @@ function PagePage({ pageData }: Props) {
 	if (!pageData) {
 		return <div>Not found</div>
 	}
+
+	const showFundraisingTools = pageData.total_raised > 0 || pageData.people > 0
+
 	return (
 		<div className="max-w-screen-md mx-auto px-6 py-12 space-y-6">
 			<Head>
-				<title>{pageData.campaign.name} | GivingTree</title>
+				<title>GivingTree | {pageData.campaign.name}</title>
 				<link
 					rel="icon"
 					href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>"
@@ -56,195 +60,79 @@ function PagePage({ pageData }: Props) {
 			</div>
 			<div className="flex justify-around items-stretch">
 				<div className="flex items-center gap-2 text-brown-600">
-					<span>🎁</span> $2,400 raised
+					<span>🎁</span> {formatMinorAmmount(pageData.campaign_raised, 0)}{' '}
+					raised
 				</div>
-				<div className="w-[1px] bg-brown-300" />
+				<div className="w-px bg-brown-300" />
 				<div className="flex items-center gap-2 text-brown-600">
-					<span>❤️</span> 3.4k views
+					<span>❤️</span> {pageData.campaign.views} views
 				</div>
-				<div className="w-[1px] bg-brown-300" />
+				<div className="w-px bg-brown-300" />
 				<div className="flex items-center gap-2 text-brown-600">
-					<span>🌳</span> 823 trees
+					<span>🌲</span> {pageData.campaign.branches} branches
 				</div>
 			</div>
 
-			<div className="bg-brown-200 rounded-2xl p-4 space-y-3">
-				<h2 className="font-bold text-lg">Donate</h2>
-				<p className="">
-					Share this link to get credit for everyone who gives from your link{' '}
-					<strong>
-						and everyone who gives to a link someone you opened your link
-						shared.
-					</strong>
-				</p>
-				<div className="flex flex-wrap space-x-3 justify-items-stretch">
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row flex-1 justify-center rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						$5
-					</button>
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row flex-1 justify-center rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						$15
-					</button>
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row flex-1 justify-center rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						$25
-					</button>
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row flex-1 justify-center rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						$50
-					</button>
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row flex-1 justify-center rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						Custom
-					</button>
-				</div>
-			</div>
-			<div className="space-y-2 ">
-				{pageData.campaign.description.split('\n').map((par, id) => (
-					<p className="text-muted" key={id}>
-						{par}
-					</p>
-				))}
-			</div>
-
-			<div className="bg-brown-200 rounded-2xl p-4 space-y-3">
-				<h2 className="font-bold text-lg">Share your Tree</h2>
-				<p className="">
-					Share this link to get credit for everyone who gives from your link{' '}
-					<strong>
-						and everyone who gives to a link someone you opened your link
-						shared.
-					</strong>
-				</p>
-
-				<div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-					<input
-						type="text"
-						// className="w-full p-3 font-mono border-black border disabled:text-black disabled:border-black  shadow-offset-black"
-						className={cx(
-							'rounded-lg font-bold font-mono flex bg-white border-none w-full shadow-button text-brown-900',
-							'py-4 px-6 transform focus:outline-none focus:ring-4'
-						)}
-						disabled
-						value={`givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`}
-					/>
-					<button
-						onClick={async () => {
-							try {
-								// await navigator.share?.({
-								// 	url: `https://givingtr.ee/${pageData.campaign.slug}/${pageData.path_id}`,
-								// 	title: 'Give to' + pageData.campaign.name,
-								// })
-							} catch (e) {}
-						}}
-						className={cx(
-							'flex-row rounded-lg font-bold gap-2 flex-shrink-0 flex bg-gradient-to-b from-white to-brown-200 shadow-button text-brown-800',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4',
-							'active:from-brown-50 active:to-brown-50 transition-all duration-75'
-						)}
-					>
-						<span>🪵</span>
-						<span>Share your branch</span>
-					</button>
-				</div>
-			</div>
-
-			<p className="text-xl text-brown-800 font-bold">Your branches</p>
-
-			<div className="flex flex-col">
-				<img
-					src="/base.png"
-					style={{ imageRendering: 'pixelated' }}
-					height={90}
-					width={90}
-					alt=""
-				/>
-				<img
-					src="/trunk.png"
-					style={{ imageRendering: 'pixelated' }}
-					height={90}
-					width={90}
-					alt=""
-				/>
-				{pageData.children.map(child => (
-					<div key={child.path_id} className="flex">
-						<img
-							src="/trunk.png"
-							style={{ imageRendering: 'pixelated' }}
-							height={90}
-							width={90}
-							alt=""
-						/>
-						<code>{child.path_id}</code>
+			{showFundraisingTools && (
+				<Stack space={6}>
+					<div className="grid grid-cols-3 gap-4">
+						<div className="bg-white shadow-lg rounded-2xl p-4">
+							<p className="text-6xl text-brown-900">
+								{formatMinorAmmount(pageData.total_raised, 0)}
+							</p>
+							<p className="font-bold text-sm text-muted">
+								Raised because of your link
+							</p>
+						</div>
+						<div className="bg-white shadow-lg rounded-2xl p-4">
+							<p className="text-6xl text-brown-900">{pageData.branches}</p>
+							<p className="font-bold text-sm text-muted">
+								Sub-campaigns linked to you
+							</p>
+						</div>
+						<div className="bg-white shadow-lg rounded-2xl p-4">
+							<p className="text-6xl text-brown-900">{pageData.views}</p>
+							<p className="font-bold text-sm text-muted">
+								People have seen this cause
+							</p>
+						</div>
 					</div>
-				))}
-			</div>
+
+					<ShareLinkBox
+						link={generatePageLink({
+							slug: pageData.campaign.slug,
+							pageId: pageData.path_id,
+						})}
+					/>
+
+					<div className="space-y-4">
+						<p className="text-xl text-brown-800 font-bold">Your Impact</p>
+						<Timeline page={pageData} />
+					</div>
+				</Stack>
+			)}
+
+			{!showFundraisingTools && (
+				<div className="space-y-6">
+					<DonationBox />
+
+					<div className="space-y-2 ">
+						<p className="text-xl text-brown-800 font-bold">This Cause</p>
+						{pageData.campaign.description.split('\n').map((par, id) => (
+							<p className="text-muted" key={id}>
+								{par}
+							</p>
+						))}
+					</div>
+
+					<ShareLinkBox
+						link={generatePageLink({
+							slug: pageData.campaign.slug,
+							pageId: pageData.path_id,
+						})}
+					/>
+				</div>
+			)}
 		</div>
 	)
 }
@@ -264,8 +152,9 @@ export async function getServerSideProps(
 				parent: context.params.key,
 			}
 		)
+		console.log(result)
 
-		nookies.set(context, 'user_hash', result.data.anonymous_user.user_hash, {
+		nookies.set(context, 'user_hash', result.data.user.hash, {
 			maxAge: 60 * 60 * 24 * 365 * 10,
 			path: '/',
 		})
@@ -283,6 +172,7 @@ export async function getServerSideProps(
 			props: { pageData: result.data },
 		}
 	} catch (e) {
+		console.error(e)
 		return {
 			notFound: true,
 		}
