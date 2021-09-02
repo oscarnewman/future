@@ -1,56 +1,115 @@
-import { cx } from '@/utilities/classes'
+import Badge from '@/components/Badge'
+import BandageIllustration from '@/components/BandageIllustration'
+import ChatIllustration from '@/components/ChatIllustration'
+import LaptopIllustration from '@/components/LaptopIllustration'
+import MicroscopeIllustration from '@/components/MicroscopeIllustration'
+import PersonIllustration from '@/components/PersonIllustration'
+import ProviderChatRow from '@/components/ProviderChatRow'
+import ServiceRow from '@/components/ServiceRow'
+import Table from '@/components/Table'
+import UpcomingVisitRow from '@/components/UpcomingVisitRow'
+import { ChevronRightIcon } from '@heroicons/react/solid'
+import { addDays, subDays } from 'date-fns'
 
 type Props = {}
 
 function Home(props: Props) {
 	return (
-		<div className="max-w-screen-md mx-auto px-6 py-12 space-y-6">
-			<h1 className="text-xl">
-				🎁🌳/ <strong>Climate Change</strong>
-			</h1>
-			<p className="text-muted">This is your giving, summarized</p>
-
-			<div className="bg-page-raised p-4 space-y-3">
-				<h2 className="font-bold text-lg">Share your Tree</h2>
-				<p className="">
-					Share this link to get credit for everyone who gives from your link{' '}
-					<strong>
-						and everyone who gives to a link someone you opened your link
-						shared.
-					</strong>
-				</p>
-
-				<div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-					<input
-						type="text"
-						className="w-full p-3 font-mono border-black border-2 border-b-4 disabled:text-black disabled:border-black"
-						disabled
-						value="givingtr.ee/climate/V1StGXR8"
-					/>
-					<button
-						onClick={async () => {
-							try {
-								await navigator.share?.({
-									url: 'https://givingtr.ee/climate/V1StGXR8',
-									title: 'Give to Climate Change',
-								})
-							} catch (e) {
-								console.log(e)
-							}
-						}}
-						className={cx(
-							'rounded-lg font-bold gap-4 flex bg-gradient-to-b from-white to-toast-200 shadow-button',
-							'text-center py-4 px-6 active:translate-y-0.5 active:shadow-button-active active:bg-gray-100 transform focus:outline-none focus:ring-4'
-						)}
-						// className={cx(
-						// 	'bg-green-300 font-bold text-black font-mono p-3 border-black border-2 border-b-4 rounded-none',
-						// 	'active:bg-green-400 translate-y-0  active:-pt-2'
-						// )}
-					>
-						Share
-					</button>
+		<div className="max-w-screen-md mx-auto py-12 space-y-8">
+			<div className="flex justify-between px-6">
+				<h1 className="text-3xl font-bold">My Health</h1>
+				<div className="w-10 h-10 bg-pink-600 rounded-full text-white flex items-center justify-center">
+					ON
 				</div>
 			</div>
+
+			<Table>
+				<UpcomingVisitRow
+					clinicName="City Bay Urgent Care"
+					distanceMi={1.3}
+					imageUrl="https://www.gohealthuc.com/sites/default/files/styles/gallery_main/public/pictures/clinics/lowerpacheights_exterior1.jpg?itok=ruo2JTu-"
+					date={addDays(new Date(), 3)}
+				/>
+			</Table>
+
+			<Table>
+				<ProviderChatRow
+					clinicName="City Bay Urgent Care"
+					date={subDays(new Date(), 3)}
+					providerName="Roger Federer, NP"
+					avatarUrl="https://st.depositphotos.com/3489481/4889/i/950/depositphotos_48892981-stock-photo-headshot-happy-smiling-male-doctor.jpg"
+					preview={{
+						icons: ['chat', 'video'],
+						message: 'Video visit and chat with Roger',
+					}}
+				/>
+				<ProviderChatRow
+					clinicName="Medspring"
+					date={subDays(new Date(), 25)}
+					providerName="Alisha Keys, MD"
+					avatarUrl="https://media.gettyimages.com/photos/portrait-of-smiling-nurse-standing-in-hospital-picture-id529400791"
+					preview={{
+						icons: ['chat'],
+						message: 'You sent an image',
+					}}
+				/>
+				<ProviderChatRow
+					clinicName="SteadyMD"
+					date={subDays(new Date(), 125)}
+					providerName="Charlotte Mills, MD"
+					avatarUrl="https://www.hospitalrecruiting.com/wp/wp-content/uploads/2020/09/Having-Influence-at-Work-as-a-Nurse.jpg"
+					preview={{
+						icons: ['prescription'],
+						message: 'Charlotte wrote you a prescription',
+					}}
+				/>
+
+				<button className="p-4 w-full flex items-center justify-between hover:bg-gray-50 active:bg-gray-100">
+					<p className="text-sm text-gray-500">3 older threads</p>
+					<ChevronRightIcon className="h-6 text-gray-400" />
+				</button>
+			</Table>
+
+			<Table title="Get care">
+				<ServiceRow
+					title="Nursing advice chat"
+					subtitle="Get quick advice on drugs, injuries, and care from licensed providers"
+					badges={<Badge tone="success">Free</Badge>}
+					illustration={<ChatIllustration />}
+				/>
+				<ServiceRow
+					title="Telemed visit"
+					subtitle="Video or voice call a provider in your state"
+					badges={<Badge tone="promote">$49</Badge>}
+					illustration={<LaptopIllustration />}
+				/>
+				<ServiceRow
+					title="In-person visit"
+					subtitle="Book at thousands of clinics near you"
+					badges={<Badge tone="promote">$69 &ndash; $129+</Badge>}
+					illustration={<PersonIllustration />}
+				/>
+			</Table>
+
+			<Table title="COVID-19">
+				<ServiceRow
+					title="Get tested"
+					subtitle="Find a clinic to get the COVID-19 test you need as soon as possible"
+					illustration={<MicroscopeIllustration />}
+					badges={
+						<>
+							<Badge tone="promote">Antibody</Badge>
+							<Badge tone="promote">PCR</Badge>
+							<Badge tone="promote">Rapid</Badge>
+						</>
+					}
+				/>
+				<ServiceRow
+					title="Find a vaccine"
+					subtitle="Search avaiable vaccine stock in your area"
+					illustration={<BandageIllustration />}
+				/>
+			</Table>
 		</div>
 	)
 }

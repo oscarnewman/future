@@ -7,13 +7,12 @@
 @tailwind utilities;
 
 html {
-	@apply text-ink;
-	@apply bg-gradient-to-b from-brown-100 to-white bg-no-repeat h-full;
+	@apply font-sans;
 }
 
 :root {
 	--text-primary: theme('colors.gray.900');
-	--text-muted: theme('colors.brown.600');
+	--text-muted: theme('colors.gray.500');
 
 	--material-page: theme('colors.brown.50');
 	--material-raised: theme('colors.orange.100');
