@@ -11,9 +11,7 @@ import UpcomingVisitRow from '@/components/UpcomingVisitRow'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { addDays, subDays } from 'date-fns'
 
-type Props = {}
-
-function Home(props: Props) {
+function Home() {
 	return (
 		<div className="max-w-screen-md mx-auto py-12 space-y-8">
 			<div className="flex justify-between px-6">
