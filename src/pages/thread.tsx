@@ -209,7 +209,6 @@ function Thread(props: Props) {
 				<label>
 					<div className="flex px-4">
 						<input
-							autoFocus
 							autoCapitalize="true"
 							autoCorrect="true"
 							ref={inputRef}
