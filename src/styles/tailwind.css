@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400;1,500;1,700;1,800&display=swap');
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+html {
+	@apply font-sans;
+	height: 100%;
+	
+}
+
+body, #__next {
+	height: 100%;
+	min-height: 100%;
+}
+
+:root {
+	--text-primary: theme('colors.gray.900');
+	--text-muted: theme('colors.gray.500');
+
+	--material-page: theme('colors.brown.50');
+	--material-raised: theme('colors.orange.100');
+}
+
+/* @media (prefers-color-scheme: dark) {
+	:root {
+		--text-primary: theme('colors.white');
+		--text-muted: theme('colors.gray.200');
+
+		--material-page: theme('colors.gray.900');
+		--material-raised: theme('colors.gray.800');
+	} */
+/* } */
+
+
+
+@layer utilities {
+	@responsive{
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.scrollbars-hidden::-webkit-scrollbar {
+			display: none;
+		}
+	
+		.scrollbars-hidden {
+			-ms-overflow-style: none;  /* IE and Edge */
+			scrollbar-width: none;  /* Firefox */
+		}
+	}
+}
