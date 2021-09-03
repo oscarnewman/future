@@ -83,7 +83,11 @@ const Chat = ({ me, children }, ref) => {
 			})}
 		>
 			<img
-				src="https://st.depositphotos.com/3489481/4889/i/950/depositphotos_48892981-stock-photo-headshot-happy-smiling-male-doctor.jpg"
+				src={
+					me
+						? 'https://thumbs.dreamstime.com/b/portrait-concentrated-person-smile-look-camera-wear-white-green-stripes-isolated-blue-color-background-209299398.jpg'
+						: 'https://st.depositphotos.com/3489481/4889/i/950/depositphotos_48892981-stock-photo-headshot-happy-smiling-male-doctor.jpg'
+				}
 				className="w-6 h-6 object-cover invisible self-end rounded-full shadow-lg img"
 				alt=""
 			/>
@@ -145,6 +149,7 @@ function Thread(props: Props) {
 
 	const scrollRef = useRef<HTMLDivElement>(null)
 	const offsetRef = useRef<HTMLFormElement>(null)
+	const inputRef = useRef<HTMLInputElement>(null)
 
 	const scroll = useScrollToElement(scrollRef.current, {
 		triggerAutomatically: false,
@@ -154,16 +159,11 @@ function Thread(props: Props) {
 	})
 
 	useEffect(() => {
-		scroll()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
 	}, [chats])
 
-	useEffect(() => {
-		scrollRef.current.scrollIntoView({ behavior: 'smooth' })
-	}, [])
-
 	return (
-		<div className="max-w-screen-md mx-auto flex flex-col justify-start  relative w-full min-h-full scrollbars-hidden">
+		<div className="max-w-screen-md mx-auto flex flex-col justify-start  h-full relative w-full min-h-full scrollbars-hidden">
 			<div className="space-y-3 px-4 sticky top-0 bg-white py-4 border-b border-gray-100">
 				<Link href="/">
 					<button className="text-pink-500 flex gap-1">
@@ -180,31 +180,37 @@ function Thread(props: Props) {
 				</nav>
 			</div>
 
-			<main className="px-4 flex-1 flex pt-6 flex-col space-y-4">
-				{sorted?.map((group, i) => (
-					<div key={i} className="space-y-1">
-						{group.chats.map((chat, j) => (
-							<ChatRef key={chat.text + i + j} me={chat.me}>
-								{chat.text}
-							</ChatRef>
-						))}
-					</div>
-				))}
-				<div ref={scrollRef} />
-			</main>
+			<div className="overflow-scroll flex flex-col-reverse">
+				<main className="px-4 flex-1 flex pt-6 flex-col space-y-4 bg-white ">
+					{sorted?.map((group, i) => (
+						<div key={i} className="space-y-1">
+							{group.chats.map((chat, j) => (
+								<ChatRef key={chat.text + i + j} me={chat.me}>
+									{chat.text}
+								</ChatRef>
+							))}
+						</div>
+					))}
+					<div ref={scrollRef} />
+				</main>
+			</div>
 
 			<form
 				ref={offsetRef}
 				onSubmit={e => {
 					e.preventDefault()
+					if (!text.trim()) return
 					setChats([...chats, { me: true, text }])
 					setText('')
+					inputRef.current?.focus()
 				}}
-				className="sticky bottom-0 py-4 w-full border-t bg-white border-gray-100 focus-within:border-gray-400"
+				className="sticky bottom-0 py-2 w-full border-t bg-white border-gray-100 focus-within:border-gray-300"
 			>
 				<label>
 					<div className="flex px-4">
 						<input
+							autoFocus
+							ref={inputRef}
 							value={text}
 							onChange={e => setText(e.target.value)}
 							type="text"
