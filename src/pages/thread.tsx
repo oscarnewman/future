@@ -5,6 +5,7 @@ import {
 	ChevronLeftIcon,
 	PaperAirplaneIcon,
 } from '@heroicons/react/outline'
+import { CameraIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import React, {
 	forwardRef,
@@ -180,7 +181,7 @@ function Thread(props: Props) {
 				</nav>
 			</div>
 
-			<div className="overflow-scroll flex flex-col-reverse">
+			<div className="overflow-scroll flex flex-1 flex-col-reverse">
 				<main className="px-4 flex-1 flex pt-6 flex-col space-y-4 bg-white ">
 					{sorted?.map((group, i) => (
 						<div key={i} className="space-y-1">
@@ -204,10 +205,13 @@ function Thread(props: Props) {
 					setText('')
 					inputRef.current?.focus()
 				}}
-				className="sticky bottom-0 py-2 w-full border-t bg-white border-gray-100 focus-within:border-gray-300"
+				className="sticky bottom-0 py-2 sm:py-4 w-full border-t bg-white border-gray-100 focus-within:border-gray-300"
 			>
 				<label>
-					<div className="flex px-4">
+					<div className="flex items-center px-4">
+						<button>
+							<CameraIcon className="h-6 text-gray-400" />
+						</button>
 						<input
 							autoCapitalize="true"
 							autoCorrect="true"
