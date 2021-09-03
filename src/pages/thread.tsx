@@ -159,7 +159,7 @@ function Thread(props: Props) {
 	})
 
 	useEffect(() => {
-		scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+		scrollRef.current?.scrollIntoView()
 	}, [chats])
 
 	return (
@@ -210,6 +210,8 @@ function Thread(props: Props) {
 					<div className="flex px-4">
 						<input
 							autoFocus
+							autoCapitalize="true"
+							autoCorrect="true"
 							ref={inputRef}
 							value={text}
 							onChange={e => setText(e.target.value)}
