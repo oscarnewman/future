@@ -1,6 +1,7 @@
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import { intlFormat } from 'date-fns'
 import React from 'react'
+import Badge from './Badge'
 import CompactRow from './CompactRow'
 
 type Props = {
@@ -25,7 +26,9 @@ function UpcomingVisitRow({ clinicName, distanceMi, imageUrl, date }: Props) {
 			tone="promote"
 			title={dateString}
 			imageUrl={imageUrl}
-			kicker="You have an upcoming visit"
+			kicker={
+				<p className="text-purple-800 font-bold">You have an upcoming visit</p>
+			}
 			subtitle={
 				<div className="space-x-1">
 					<LocationMarkerIcon className={iconClass} />

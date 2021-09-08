@@ -20,7 +20,6 @@ function Home() {
 					ON
 				</div>
 			</div>
-
 			<Table>
 				<UpcomingVisitRow
 					clinicName="City Bay Urgent Care"
@@ -28,6 +27,8 @@ function Home() {
 					imageUrl="https://www.gohealthuc.com/sites/default/files/styles/gallery_main/public/pictures/clinics/lowerpacheights_exterior1.jpg?itok=ruo2JTu-"
 					date={addDays(new Date(), 3)}
 				/>
+			</Table>
+			<Table>
 				<ProviderChatRow
 					clinicName="City Bay Urgent Care"
 					date={subDays(new Date(), 3)}

@@ -1,3 +1,4 @@
+import Badge from '@/components/Badge'
 import { useScrollToElement } from '@/hooks/useScrollToElement'
 import { cx } from '@/utilities/classes'
 import {
@@ -5,7 +6,13 @@ import {
 	ChevronLeftIcon,
 	PaperAirplaneIcon,
 } from '@heroicons/react/outline'
-import { CameraIcon } from '@heroicons/react/solid'
+import {
+	BadgeCheckIcon,
+	BookmarkIcon,
+	CameraIcon,
+	ChevronRightIcon,
+	VideoCameraIcon,
+} from '@heroicons/react/solid'
 import Link from 'next/link'
 import React, {
 	forwardRef,
@@ -36,27 +43,7 @@ const initialChats = [
 	},
 	{
 		me: false,
-		text: 'What happens when you shake your arms like a polaroid picture?',
-	},
-	{
-		me: false,
-		text: 'Hey there! How can I help you today?',
-	},
-	{
-		me: true,
-		text: "I've got this werid pain in my arm.",
-	},
-	{
-		me: true,
-		text: 'It started this morning after I fell off of my bike when I was trying to jump over a car from a ramp I made.',
-	},
-	{
-		me: false,
-		text: 'Hmmm, ok. Sounds like you might have just sprained something.',
-	},
-	{
-		me: false,
-		text: 'What happens when you shake your arms like a polaroid picture?',
+		text: "I think we're going to need some imaging for this. Let's get you in-person asap.",
 	},
 ]
 
@@ -74,10 +61,9 @@ const NamePlate = () => (
 	</div>
 )
 
-const Chat = ({ me, children }, ref) => {
+const Chat = ({ me, children }) => {
 	return (
 		<div
-			ref={ref}
 			className={cx('flex items-center gap-2', {
 				'me flex-row-reverse': me,
 				them: !me,
@@ -109,27 +95,177 @@ const Chat = ({ me, children }, ref) => {
 				:not(:last-child) .chat {
 					@apply rounded-xl;
 				}
-
-				/* .them + .them .img {
-					visibility: visible;
-				}
-
-				:not(.them + .them) .chat {
-					@apply rounded-bl-xl;
-				}
-
-				.me + .me .img {
-					visibility: visible;
-				}
-
-				:not(.me + .me) .chat {
-					@apply rounded-br-xl;
-				} */
 			`}</style>
 		</div>
 	)
 }
-const ChatRef = React.forwardRef(Chat)
+
+const BookingChat = () => {
+	return (
+		<div className={cx('flex items-center gap-2')}>
+			<div className="w-6 h-6 flex-shrink-0 bg-pink-500 self-end rounded-full shadow-lg img flex items-center justify-center">
+				<BadgeCheckIcon className="w-4 h-4 flex-0 text-white" />
+			</div>
+			<div className="rounded-xl border border-gray-100 px-3 py-3 space-y-3">
+				<p className="text-gray-500 text-sm">
+					Next available appointments near you
+				</p>
+				<div className="space-y-6">
+					<div>
+						<div className="pb-4">
+							<div className="text-sm font-bold flex items-center gap-1">
+								<span className="flex items-center gap-1">
+									City Bay Urgent Care
+								</span>
+								<BadgeCheckIcon className="h-4 text-pink-600 mr-1" />
+								<Badge tone="promote" size="small">
+									$90+
+								</Badge>
+							</div>
+							<p className="text-gray-500 text-sm font-normal">
+								0.3 miles from you
+							</p>
+						</div>
+						<div className="flex gap-2 flex-wrap">
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								3:00 pm
+							</button>
+							<button
+								className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded"
+								disabled
+							>
+								3:20 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								3:40 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								4:00 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								4:20 pm
+							</button>
+						</div>
+					</div>
+					<div>
+						<div className="pb-4">
+							<p className="text-sm font-bold">
+								Dignity Health{' '}
+								<Badge size="small" tone="promote">
+									$120+
+								</Badge>
+							</p>
+							<p className="text-gray-500 text-sm font-normal">
+								1.6 miles from you
+							</p>
+						</div>
+						<div className="flex gap-2 flex-wrap">
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								3:00 pm
+							</button>
+							<button
+								className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded"
+								disabled
+							>
+								3:20 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								3:40 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								4:00 pm
+							</button>
+							<button className="bg-pink-50 text-pink-700 px-2 py-1 text-sm rounded">
+								4:20 pm
+							</button>
+						</div>
+					</div>
+					<button className="w-full text-pink-600 text-sm flex justify-between items-center py-1">
+						<span>See more options</span>{' '}
+						<ChevronRightIcon className="h-5 text-gray-400" />
+					</button>
+				</div>
+			</div>
+			<style jsx>{`
+				:last-child .img {
+					visibility: visible;
+				}
+
+				:not(:last-child) .chat {
+					@apply rounded-xl;
+				}
+			`}</style>
+		</div>
+	)
+}
+const TelemedChat = () => {
+	return (
+		<div className={cx('flex items-center gap-2 ')}>
+			<div className="w-6 h-6 bg-pink-500 flex-shrink-0 self-end rounded-full shadow-lg img flex items-center justify-center">
+				<BadgeCheckIcon className="w-4 h-4 text-white" />
+			</div>
+			<div className="rounded-xl border border-gray-100 px-3 py-3 space-y-4">
+				<p className="text-gray-500 text-sm">
+					Talk to a licensed provider for{' '}
+					<Badge tone="promote" size="small">
+						$40
+					</Badge>
+				</p>
+				<div className="space-y-1">
+					<p className="text-sm font-bold">Call Roger right now</p>
+					<button className="w-full flex items-center justify-center bg-pink-600 text-white px-2 py-2 rounded-lg">
+						<VideoCameraIcon className="h-5 text-pink-300 mr-2" />
+						Talk to Roger
+					</button>
+				</div>
+				<div className="space-y-1">
+					<p className="text-sm font-bold">Schedule a telemed visit later</p>
+					<div className="flex gap-2 flex-wrap">
+						<button className="bg-pink-50 flex items-center justify-center text-pink-700 px-2 py-1 text-sm rounded">
+							<VideoCameraIcon className="h-3 text-pink-300 mr-1" />
+							3:00 pm
+						</button>
+						<button
+							className="bg-pink-50 flex items-center justify-center text-pink-700 px-2 py-1 text-sm rounded"
+							disabled
+						>
+							<VideoCameraIcon className="h-3 text-pink-300 mr-1" />
+							3:20 pm
+						</button>
+						<button className="bg-pink-50 flex items-center justify-center text-pink-700 px-2 py-1 text-sm rounded">
+							<VideoCameraIcon className="h-3 text-pink-300 mr-1" />
+							3:40 pm
+						</button>
+						<button className="bg-pink-50 flex items-center justify-center text-pink-700 px-2 py-1 text-sm rounded">
+							<VideoCameraIcon className="h-3 text-pink-300 mr-1" />
+							4:00 pm
+						</button>
+						<button className="bg-pink-50 flex items-center justify-center text-pink-700 px-2 py-1 text-sm rounded">
+							<VideoCameraIcon className="h-3 text-pink-300 mr-1" />
+							4:20 pm
+						</button>
+					</div>
+					<p className="text-sm text-gray-500 max-w-md">
+						You will be matched with the first avaialble provider
+					</p>
+					<button className="w-full text-pink-600 text-sm flex justify-between items-center py-1">
+						<span>See more options</span>{' '}
+						<ChevronRightIcon className="h-5 text-gray-400" />
+					</button>
+				</div>
+			</div>
+			<style jsx>{`
+				:last-child .img {
+					visibility: visible;
+				}
+
+				:not(:last-child) .chat {
+					@apply rounded-xl;
+				}
+			`}</style>
+		</div>
+	)
+}
 
 function Thread(props: Props) {
 	const [text, setText] = useState('')
@@ -151,13 +287,6 @@ function Thread(props: Props) {
 	const scrollRef = useRef<HTMLDivElement>(null)
 	const offsetRef = useRef<HTMLFormElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
-
-	const scroll = useScrollToElement(scrollRef.current, {
-		triggerAutomatically: false,
-		vertical: {
-			offsetElement: offsetRef,
-		},
-	})
 
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView()
@@ -186,12 +315,16 @@ function Thread(props: Props) {
 					{sorted?.map((group, i) => (
 						<div key={i} className="space-y-1">
 							{group.chats.map((chat, j) => (
-								<ChatRef key={chat.text + i + j} me={chat.me}>
+								<Chat key={chat.text + i + j} me={chat.me}>
 									{chat.text}
-								</ChatRef>
+								</Chat>
 							))}
 						</div>
 					))}
+					<div className="space-y-2">
+						<BookingChat />
+						<TelemedChat />
+					</div>
 					<div ref={scrollRef} />
 				</main>
 			</div>
@@ -209,9 +342,10 @@ function Thread(props: Props) {
 			>
 				<label>
 					<div className="flex items-center px-4">
-						<button>
+						<label className="cursor-pointer">
 							<CameraIcon className="h-6 text-gray-400" />
-						</button>
+							<input type="file" accept="image/*" className="hidden" />
+						</label>
 						<input
 							autoCapitalize="true"
 							autoCorrect="true"
